@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+
+message Request {
+    string msg = 1;
+}
+
+service PlainSQL {
+    rpc Echo(Request) returns (Request) {};
+}
+
