@@ -57,6 +57,7 @@ type ClientOpts struct {
 
 // NewGRPCClient that connects to the configurator server
 func NewGRPCClient(opts ClientOpts) (conn *grpc.ClientConn, err error) {
+	log.Println("OPts: ", opts)
 	t, err := createTLSConfig(opts.SkipVerify)
 	if err != nil {
 		return nil, errors.Wrapf(err, "unable to create TLS config")
