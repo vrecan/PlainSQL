@@ -39,8 +39,13 @@ func (c *Client) Init() (err error) {
 
 //Echo call to get response from server
 func (c *Client) Echo(req request.Request) (resp *request.Request, err error) {
-	log.Println("Client conn: ", c.Client)
 	resp, err = c.Client.Echo(context.Background(), &req)
+	return resp, err
+}
+
+//Echo call to get response from server
+func (c *Client) Execute(req request.Request) (resp *request.Results, err error) {
+	resp, err = c.Client.Execute(context.Background(), &req)
 	return resp, err
 }
 
