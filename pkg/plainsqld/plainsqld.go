@@ -51,6 +51,10 @@ func (p *PlainSQLD) Echo(ctx context.Context, req *rq.Request) (*rq.Request, err
 	return req, nil
 }
 
+func (p *PlainSQLD) Execute(ctx context.Context, req *rq.Request) (*rq.Results, error) {
+	return &rq.Results{RawString: []string{req.String()}}, nil
+}
+
 //Start initialized the server in a background thread
 func (p *PlainSQLD) Start() {
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%v", p.Opts.Port))

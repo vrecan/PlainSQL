@@ -26,7 +26,7 @@ func (e *Echo) Execute(args []string) error {
 	}
 	defer cli.Close()
 
-	resp, err := cli.Echo(request.Request{Msg: string(args[0])})
+	resp, err := cli.Echo(request.Request{Query: string(args[0])})
 	fmt.Println("ERROR: ", err, " RESP: ", resp)
 
 	return nil
