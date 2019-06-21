@@ -1,11 +1,20 @@
 syntax = "proto3";
 
+// import "google/protobuf/any.proto";
 
 message Request {
-    string msg = 1;
+    string query = 1;
 }
+
+message Results {
+    // repeated google.protobuf.Any response = 1;
+    repeated string rawString = 2;
+}
+
 
 service PlainSQL {
     rpc Echo(Request) returns (Request) {};
+    rpc Execute(Request) returns  (Results) {};
 }
+
 
