@@ -6,6 +6,12 @@ import (
 	"log"
 	"net"
 
+	"github.com/davecgh/go-spew/spew"
+	PARSER "github.com/pingcap/parser"
+	"github.com/pingcap/parser/mysql"
+
+	//parser_driver is required for the parser to work correctly
+	_ "github.com/pingcap/tidb/types/parser_driver"
 	rq "github.com/vrecan/PlainSQL/pkg/request"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -52,6 +58,15 @@ func (p *PlainSQLD) Echo(ctx context.Context, req *rq.Request) (*rq.Request, err
 }
 
 func (p *PlainSQLD) Execute(ctx context.Context, req *rq.Request) (*rq.Results, error) {
+	parser := PARSER.New()
+	parser.SetSQLMode(mysql.ModeNoBackslashEscapes)
+	//parse the query
+	stmt, warns, err := parser.Parse(req.Query, "", "")
+	if err != nil {
+		fmt.Println("ERR:", err, "WARNS", warns)
+		return nil, err
+	}
+	spew.Dump(stmt)
 	return &rq.Results{RawString: []string{req.String()}}, nil
 }
 
